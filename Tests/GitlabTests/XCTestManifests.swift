@@ -4,6 +4,7 @@ import XCTest
 public func allTests() -> [XCTestCaseEntry] {
     return [
         testCase(GitlabTests.allTests),
+        testCase(IssueTests.allTests),
     ]
 }
 #endif

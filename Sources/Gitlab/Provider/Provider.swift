@@ -32,13 +32,12 @@ public final class GitlabProvider: Provider {
 }
 
 public final class GitlabClient: Service {
-    private let serverUrl: URL
-    private let privateToken: String
-    private let client: Client
+
+    public let issue: IssueRoutes
 
     internal init(serverUrl: URL, privateToken: String, client: Client) {
-        self.serverUrl = serverUrl
-        self.privateToken = privateToken
-        self.client = client
+        let apiRequest = GitlabAPIRequest(httpClient: client, serverUrl: serverUrl, privateToken: privateToken)
+
+        issue = GitlabIssueRoutes(request: apiRequest)
     }
 }
