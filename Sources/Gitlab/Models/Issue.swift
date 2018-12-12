@@ -2,7 +2,9 @@ import Foundation
 
 public struct Issue: GitlabModel {
 
-    public let id: Int
+    public typealias ID = Int
+    
+    public let id: ID
     public let title: String
     public let projectId: Int
     public let description: String?

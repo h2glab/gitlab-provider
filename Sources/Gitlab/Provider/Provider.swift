@@ -34,10 +34,19 @@ public final class GitlabProvider: Provider {
 public final class GitlabClient: Service {
 
     public let issue: IssueRoutes
+    
+    public let user: UserRoutes
+    
+    public let project: ProjectRoutes
+    
+    public let group: GroupRoutes
 
     internal init(serverUrl: URL, privateToken: String, client: Client) {
         let apiRequest = GitlabAPIRequest(httpClient: client, serverUrl: serverUrl, privateToken: privateToken)
 
         issue = GitlabIssueRoutes(request: apiRequest)
+        user = GitlabUserRoutes(request: apiRequest)
+        project = GitlabProjectRoutes(request: apiRequest)
+        group = GitlabGroupRoutes(request: apiRequest)
     }
 }

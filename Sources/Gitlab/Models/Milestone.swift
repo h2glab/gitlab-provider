@@ -2,9 +2,16 @@ import Foundation
 
 public struct Milestone: GitlabModel {
 
-    public let id: Int
+    public typealias ID = Int
+    
+    public enum State: String, Codable {
+        case active
+        case closed
+    }
+    
+    public let id: ID
     public let title: String
-    public let state: String
+    public let state: State
     public let dueDate: Date?
     public let startDate: Date?
 

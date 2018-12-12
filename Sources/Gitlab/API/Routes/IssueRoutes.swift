@@ -1,7 +1,7 @@
 import Vapor
 
 public protocol IssueRoutes {
-    func listAll(filter: [String: Any]?) throws -> Future<IssueList>
+    func list(filter: Issue.Filter?) throws -> Future<Page<Issue>>
 }
 
 public struct GitlabIssueRoutes: IssueRoutes {
@@ -13,12 +13,11 @@ public struct GitlabIssueRoutes: IssueRoutes {
 
     /// List all issues
     /// [Learn More →](https://docs.gitlab.com/ee/api/issues.html#list-issues)
-    public func listAll(filter: [String : Any]?) throws -> Future<IssueList> {
-        var queryParams = ""
-        if let filter = filter {
-            queryParams = filter.queryParameters
-        }
-
-        return try request.send(method: .GET, path: GitlabAPIEndpoint.issues.endpoint, query: queryParams)
+    public func list(filter: Issue.Filter?) throws -> Future<Page<Issue>> {
+        var urlParser = URLComponents()
+        urlParser.queryItems = filter.dictionary.map { key, value in URLQueryItem(name: key, value: "\(value)") }
+        let httpBodyString = urlParser.percentEncodedQuery
+        let pathEncoded = httpBodyString?.replacingOccurrences(of: ":", with: "%3A") ?? ""
+        return try request.sendList(method: .GET, path: GitlabAPIEndpoint.issues.endpoint, query: pathEncoded)
     }
 }
