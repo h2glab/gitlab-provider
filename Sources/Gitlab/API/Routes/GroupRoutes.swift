@@ -1,6 +1,7 @@
 import Vapor
 
 public protocol GroupRoutes {
+    func fetch(id: Group.ID, withProject: Bool) throws -> Future<Group>
     func list(filter: Group.Filter?) throws -> Future<Page<Group>>
     func listProjects(groupId: Group.ID, filter: Project.Filter?) throws -> Future<Page<Project>>
     func listMilestones(groupId: Group.ID, filter: Milestone.Filter?) throws -> Future<Page<Milestone>>
@@ -14,7 +15,19 @@ public struct GitlabGroupRoutes: GroupRoutes {
     init(request: GitlabRequest) {
         self.request = request
     }
-    
+
+    /// Details of a group
+    /// [Learn More →](https://docs.gitlab.com/ee/api/groups.html#details-of-a-group)
+    public func fetch(id: Group.ID, withProject: Bool = true) throws -> Future<Group> {
+        let queryParams: String
+        if (!withProject) {
+            queryParams = ["with_custom_attributes": "false"].queryParameters
+        } else {
+            queryParams = ""
+        }
+        return try request.send(method: .GET, path: GitlabAPIEndpoint.group(id).endpoint, query: queryParams)
+    }
+
     /// List groups
     /// [Learn More →](https://docs.gitlab.com/ee/api/groups.html#list-groups)
     public func list(filter: Group.Filter?) throws -> Future<Page<Group>> {

@@ -18,6 +18,7 @@ internal enum GitlabAPIEndpoint {
     
     // MARK: - GROUPS
     case groups
+    case group(Group.ID)
     case groupProjects(Group.ID)
     case groupMilestones(Group.ID)
     case groupMilestoneIssues(Group.ID, Milestone.ID)
@@ -34,6 +35,7 @@ internal enum GitlabAPIEndpoint {
         case .projectLabels(let projectId): return APIVersion + "projects/\(projectId)/labels"
         
         case .groups: return APIVersion + "groups"
+        case .group(let groupId): return APIVersion + "groups/\(groupId)"
         case .groupProjects(let groupId) : return APIVersion + "/groups/\(groupId)/projects"
         case .groupMilestones(let groupId): return APIVersion + "groups/\(groupId)/milestones"
         case .groupMilestoneIssues(let groupId, let milestoneId): return APIVersion + "groups/\(groupId)/milestones/\(milestoneId)/issues"
