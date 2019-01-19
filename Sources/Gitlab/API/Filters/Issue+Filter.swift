@@ -6,6 +6,12 @@ public extension Issue {
             case closed
         }
         
+        public enum Scope: String, Codable {
+            case created_by_me
+            case assigned_to_me
+            case all
+        }
+        
         var per_page: Int = 20
         /// Return all issues or just those that are opened or closed
         var state: State? = nil
@@ -16,7 +22,7 @@ public extension Issue {
         /// Return issues for the given scope: created_by_me, assigned_to_me or all. Defaults to created_by_me
         /// For versions before 11.0, use the now deprecated created-by-me or assigned-to-me scopes instead.
         /// (Introduced in GitLab 9.5. Changed to snake_case in GitLab 11.0)
-        var scope: String? = nil
+        var scope: Scope? = nil
         /// Return issues created by the given user id. Combine with scope=all or scope=assigned_to_me. (Introduced in GitLab 9.5)
         var author_id: Int? = nil
         /// Return issues assigned to the given user id. None returns unassigned issues. Any returns issues with an assignee. (Introduced in GitLab 9.5)
@@ -86,6 +92,11 @@ public extension Issue.Filter {
         
         public func withLabels(_ labels: [String]) -> Builder {
             filter.labels = labels.joined(separator: ",")
+            return self
+        }
+        
+        public func withScope(_ scope: Scope) -> Builder {
+            filter.scope = scope
             return self
         }
         
