@@ -1,5 +1,5 @@
 public extension User {
-    public struct Filter: Codable {
+    struct Filter: Codable {
         
         var per_page: Int = 20
         
@@ -9,11 +9,11 @@ public extension User {
 
 public extension User.Filter {
     
-    public var builder: Builder {
+    var builder: Builder {
         return Builder()
     }
     
-    public class Builder {
+    class Builder {
         
         private var filter: User.Filter
         

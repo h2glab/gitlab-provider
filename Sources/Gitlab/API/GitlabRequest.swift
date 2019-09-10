@@ -9,15 +9,15 @@ public protocol GitlabRequest: class {
 }
 
 public extension GitlabRequest {
-    public func send<GM: GitlabModel>(method: HTTPMethod, path: String, query: String = "", body: LosslessHTTPBodyRepresentable = HTTPBody(string: ""), headers: HTTPHeaders = [:]) throws -> Future<GM> {
+    func send<GM: GitlabModel>(method: HTTPMethod, path: String, query: String = "", body: LosslessHTTPBodyRepresentable = HTTPBody(string: ""), headers: HTTPHeaders = [:]) throws -> Future<GM> {
         return try send(method: method, path: path, query: query, body: body, headers: headers)
     }
 
-    public func sendList<GM: GitlabModel>(method: HTTPMethod, path: String, query: String = "", body: LosslessHTTPBodyRepresentable = HTTPBody(string: ""), headers: HTTPHeaders = [:]) throws -> Future<Page<GM>> {
+    func sendList<GM: GitlabModel>(method: HTTPMethod, path: String, query: String = "", body: LosslessHTTPBodyRepresentable = HTTPBody(string: ""), headers: HTTPHeaders = [:]) throws -> Future<Page<GM>> {
         return try sendList(method: method, path: path, query: query, body: body, headers: headers)
     }
     
-    public func serializedResponse<GM: GitlabModel>(response: HTTPResponse, worker: EventLoop) throws -> Future<GM> {
+    func serializedResponse<GM: GitlabModel>(response: HTTPResponse, worker: EventLoop) throws -> Future<GM> {
         let decoder = GitlabJSONDecoder()
 
         guard response.status == .ok else {
@@ -29,7 +29,7 @@ public extension GitlabRequest {
         return try decoder.decode(GM.self, from: response, maxSize: 65_536, on: worker)
     }
     
-    public func serializedResponseList<GM: GitlabModel>(response: HTTPResponse, worker: EventLoop) throws -> Future<Page<GM>> {
+    func serializedResponseList<GM: GitlabModel>(response: HTTPResponse, worker: EventLoop) throws -> Future<Page<GM>> {
         let decoder = GitlabJSONDecoder()
         
         guard response.status == .ok else {

@@ -1,5 +1,5 @@
 public extension Issue {
-    public struct Filter: Codable {
+    struct Filter: Codable {
         
         public enum State: String, Codable {
             case opened
@@ -58,11 +58,11 @@ public extension Issue {
 
 public extension Issue.Filter {
     
-    public var builder: Builder {
+    var builder: Builder {
         return Builder()
     }
     
-    public class Builder {
+    class Builder {
         
         private var filter: Issue.Filter
         
