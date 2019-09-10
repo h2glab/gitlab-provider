@@ -1,6 +1,6 @@
 
 public extension Project {
-    public struct Filter: Codable {
+    struct Filter: Codable {
         
         var per_page: Int = 20
         /// Limit by archived status.
@@ -14,11 +14,11 @@ public extension Project {
 
 public extension Project.Filter {
     
-    public var builder: Builder {
+    var builder: Builder {
         return Builder()
     }
     
-    public class Builder {
+    class Builder {
         
         private var filter: Project.Filter
         

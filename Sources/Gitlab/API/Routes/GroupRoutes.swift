@@ -6,6 +6,7 @@ public protocol GroupRoutes {
     func listProjects(groupId: Group.ID, filter: Project.Filter?) throws -> Future<Page<Project>>
     func listMilestones(groupId: Group.ID, filter: Milestone.Filter?) throws -> Future<Page<Milestone>>
     func listMilestoneIssues(groupId: Group.ID, milestoneId: Milestone.ID) throws -> Future<Page<Issue>>
+    func listIssues(groupId: Group.ID, filter: Issue.Filter?) throws -> Future<Page<Issue>>
 }
 
 public struct GitlabGroupRoutes: GroupRoutes {
@@ -57,5 +58,13 @@ public struct GitlabGroupRoutes: GroupRoutes {
     public func listMilestoneIssues(groupId: Group.ID, milestoneId: Milestone.ID) throws -> Future<Page<Issue>> {
 
         return try request.sendList(method: .GET, path: GitlabAPIEndpoint.groupMilestoneIssues(groupId, milestoneId).endpoint, query: "")
+    }
+    
+    /// Get a list of a group’s issues.
+    /// [Learn More →](https://docs.gitlab.com/ee/api/issues.html#list-group-issues)
+    public func listIssues(groupId: Group.ID, filter: Issue.Filter?) throws -> EventLoopFuture<Page<Issue>> {
+
+        let queryParams = filter?.dictionary.queryParameters ?? ""
+        return try request.sendList(method: .GET, path: GitlabAPIEndpoint.groupIssues(groupId).endpoint, query: queryParams)
     }
 }

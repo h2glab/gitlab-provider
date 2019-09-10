@@ -1,5 +1,5 @@
 public extension Milestone {
-    public struct Filter: Codable {
+    struct Filter: Codable {
         
         /// Return only active or closed milestones.
         var state: State? = nil
@@ -10,11 +10,11 @@ public extension Milestone {
 
 public extension Milestone.Filter {
     
-    public var builder: Builder {
+    var builder: Builder {
         return Builder()
     }
     
-    public class Builder {
+    class Builder {
         
         private var filter: Milestone.Filter
         

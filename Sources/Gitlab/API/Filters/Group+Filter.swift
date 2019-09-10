@@ -1,6 +1,6 @@
 
 public extension Group {
-    public struct Filter: Codable {
+    struct Filter: Codable {
         
         var per_page: Int = 20
         
@@ -10,11 +10,11 @@ public extension Group {
 
 public extension Group.Filter {
     
-    public var builder: Builder {
+    var builder: Builder {
         return Builder()
     }
     
-    public class Builder {
+    class Builder {
         
         private var filter: Group.Filter
         

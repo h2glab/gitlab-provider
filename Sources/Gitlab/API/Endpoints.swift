@@ -22,6 +22,7 @@ internal enum GitlabAPIEndpoint {
     case groupProjects(Group.ID)
     case groupMilestones(Group.ID)
     case groupMilestoneIssues(Group.ID, Milestone.ID)
+    case groupIssues(Group.ID)
     
     var endpoint: String {
         switch self {
@@ -39,6 +40,7 @@ internal enum GitlabAPIEndpoint {
         case .groupProjects(let groupId) : return APIVersion + "/groups/\(groupId)/projects"
         case .groupMilestones(let groupId): return APIVersion + "groups/\(groupId)/milestones"
         case .groupMilestoneIssues(let groupId, let milestoneId): return APIVersion + "groups/\(groupId)/milestones/\(milestoneId)/issues"
+        case .groupIssues(let groupId): return APIVersion + "groups/\(groupId)/issues"
         }
     }
 }
